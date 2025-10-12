@@ -11,6 +11,7 @@ from ._gateway import PaymentGateway
 from .cryptomus import Cryptomus
 from .heleket import Heleket
 from .telegram_stars import TelegramStars
+from .urlpay import UrlPay
 from .yookassa import Yookassa
 from .yoomoney import Yoomoney
 
@@ -47,6 +48,7 @@ class GatewayFactory:
             (config.shop.PAYMENT_STARS_ENABLED, TelegramStars),
             (config.shop.PAYMENT_CRYPTOMUS_ENABLED, Cryptomus),
             (config.shop.PAYMENT_HELEKET_ENABLED, Heleket),
+            (config.shop.PAYMENT_URLPAY_ENABLED, UrlPay),
             (config.shop.PAYMENT_YOOKASSA_ENABLED, Yookassa),
             (config.shop.PAYMENT_YOOMONEY_ENABLED, Yoomoney),
         ]

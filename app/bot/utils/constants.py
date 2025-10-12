@@ -34,6 +34,7 @@ CRYPTOMUS_WEBHOOK = "/cryptomus"  # Webhook path for receiving Cryptomus payment
 HELEKET_WEBHOOK = "/heleket"  # Webhook path for receiving Heleket payment notifications
 YOOKASSA_WEBHOOK = "/yookassa"  # Webhook path for receiving Yookassa payment notifications
 YOOMONEY_WEBHOOK = "/yoomoney"  # Webhook path for receiving Yoomoney payment notifications
+URLPAY_WEBHOOK = "/urlpay"  # Webhook path for receiving UrlPay payment notifications
 # endregion
 
 # region: Notification tags

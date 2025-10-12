@@ -3,5 +3,6 @@ from .cryptomus import Cryptomus
 from .gateway_factory import GatewayFactory
 from .heleket import Heleket
 from .telegram_stars import TelegramStars
+from .urlpay import UrlPay
 from .yookassa import Yookassa
 from .yoomoney import Yoomoney

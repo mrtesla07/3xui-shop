@@ -33,7 +33,7 @@
 
 **3X-UI-SHOP** is a comprehensive solution designed to automate the sale of VPN subscriptions through Telegram.
 The bot uses the **3X-UI** panel API for client management and supports multiple payment methods, including
-**Cryptomus**, **Heleket**, **YooKassa**, **YooMoney**, and **Telegram Stars**.
+**Cryptomus**, **Heleket**, **UrlPay**, **YooKassa**, **YooMoney**, and **Telegram Stars**.
 
 The bot enables efficient subscription sales with advanced features:
 
@@ -159,6 +159,7 @@ Before starting the installation, make sure you have the installed [**Docker**](
 | SHOP_PAYMENT_STARS_ENABLED | ⭕ | True | Enable Telegram stars payment |
 | SHOP_PAYMENT_CRYPTOMUS_ENABLED | ⭕ | False | Enable Cryptomus payment |
 | SHOP_PAYMENT_HELEKET_ENABLED | ⭕ | False | Enable Heleket payment |
+| SHOP_PAYMENT_URLPAY_ENABLED | ✅ | False | Enable UrlPay payment |
 | SHOP_PAYMENT_YOOKASSA_ENABLED | ⭕ | False | Enable Yookassa payment |
 | SHOP_PAYMENT_YOOMONEY_ENABLED | ⭕ | False | Enable Yoomoney payment |
 | | | |
@@ -173,6 +174,9 @@ Before starting the installation, make sure you have the installed [**Docker**](
 | | | |
 | HELEKET_API_KEY | ⭕ | - | API key for Heleket payment |
 | HELEKET_MERCHANT_ID | ⭕ | - | Merchant ID for Heleket payment |
+| URLPAY_API_KEY | ✅ | - | API key for UrlPay payment |
+| URLPAY_SHOP_ID | ✅ | - | Shop ID for UrlPay payment |
+| URLPAY_SECRET_KEY | ✅ | - | Secret key for UrlPay payment signatures |
 | | | |
 | YOOKASSA_TOKEN | ⭕ | - | Token for YooKassa payment |
 | YOOKASSA_SHOP_ID | ⭕ | - | Shop ID for YooKassa payment |

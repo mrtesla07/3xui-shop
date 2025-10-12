@@ -40,6 +40,7 @@ DEFAULT_SHOP_PAYMENT_CRYPTOMUS_ENABLED = False
 DEFAULT_SHOP_PAYMENT_HELEKET_ENABLED = False
 DEFAULT_SHOP_PAYMENT_YOOKASSA_ENABLED = False
 DEFAULT_SHOP_PAYMENT_YOOMONEY_ENABLED = False
+DEFAULT_SHOP_PAYMENT_URLPAY_ENABLED = False
 DEFAULT_DB_NAME = "bot_database"
 
 DEFAULT_REDIS_DB_NAME = "0"
@@ -90,6 +91,7 @@ class ShopConfig:
     PAYMENT_HELEKET_ENABLED: bool
     PAYMENT_YOOKASSA_ENABLED: bool
     PAYMENT_YOOMONEY_ENABLED: bool
+    PAYMENT_URLPAY_ENABLED: bool
 
 
 @dataclass
@@ -110,6 +112,14 @@ class CryptomusConfig:
 class HeleketConfig:
     API_KEY: str | None
     MERCHANT_ID: str | None
+
+
+@dataclass
+class UrlPayConfig:
+    API_KEY: str | None
+    SHOP_ID: int | None
+    SECRET_KEY: str | None
+
 
 @dataclass
 class YooKassaConfig:
@@ -165,6 +175,7 @@ class Config:
     xui: XUIConfig
     cryptomus: CryptomusConfig
     heleket: HeleketConfig
+    urlpay: UrlPayConfig
     yookassa: YooKassaConfig
     yoomoney: YooMoneyConfig
     database: DatabaseConfig
@@ -215,6 +226,23 @@ def load_config() -> Config:
             )
             payment_heleket_enabled = False
 
+    payment_urlpay_enabled = env.bool(
+        "SHOP_PAYMENT_URLPAY_ENABLED",
+        default=DEFAULT_SHOP_PAYMENT_URLPAY_ENABLED,
+    )
+    urlpay_api_key = None
+    urlpay_shop_id: int | None = None
+    urlpay_secret_key = None
+    if payment_urlpay_enabled:
+        urlpay_api_key = env.str("URLPAY_API_KEY", default=None)
+        urlpay_shop_id = env.int("URLPAY_SHOP_ID", default=None)
+        urlpay_secret_key = env.str("URLPAY_SECRET_KEY", default=None)
+        if not urlpay_api_key or urlpay_shop_id is None or not urlpay_secret_key:
+            logger.error(
+                "URLPAY_API_KEY, URLPAY_SHOP_ID or URLPAY_SECRET_KEY is not set. Payment UrlPay is disabled."
+            )
+            payment_urlpay_enabled = False
+
     payment_yookassa_enabled = env.bool(
         "SHOP_PAYMENT_YOOKASSA_ENABLED",
         default=DEFAULT_SHOP_PAYMENT_YOOKASSA_ENABLED,
@@ -245,6 +273,7 @@ def load_config() -> Config:
         not payment_stars_enabled
         and not payment_cryptomus_enabled
         and not payment_heleket_enabled
+        and not payment_urlpay_enabled
         and not payment_yookassa_enabled
         and not payment_yoomoney_enabled
     ):
@@ -334,6 +363,7 @@ def load_config() -> Config:
             PAYMENT_STARS_ENABLED=payment_stars_enabled,
             PAYMENT_CRYPTOMUS_ENABLED=payment_cryptomus_enabled,
             PAYMENT_HELEKET_ENABLED=payment_heleket_enabled,
+            PAYMENT_URLPAY_ENABLED=payment_urlpay_enabled,
             PAYMENT_YOOKASSA_ENABLED=payment_yookassa_enabled,
             PAYMENT_YOOMONEY_ENABLED=payment_yoomoney_enabled,
         ),
@@ -354,6 +384,11 @@ def load_config() -> Config:
         heleket=HeleketConfig(
             API_KEY=env.str("HELEKET_API_KEY", default=None),
             MERCHANT_ID=env.str("HELEKET_MERCHANT_ID", default=None),
+        ),
+        urlpay=UrlPayConfig(
+            API_KEY=urlpay_api_key,
+            SHOP_ID=urlpay_shop_id,
+            SECRET_KEY=urlpay_secret_key,
         ),
         yookassa=YooKassaConfig(
             TOKEN=env.str("YOOKASSA_TOKEN", default=None),

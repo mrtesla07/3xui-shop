@@ -115,13 +115,13 @@ msgstr ""
 #: app/bot/routers/admin_tools/invites_handler.py:77
 msgid "invite_editor:message:created_success"
 msgstr ""
-"✅ <b>И?нвайт-ссылка успешно создана!</b>\n"
+"✅ <b>Инвайт-ссылка успешно создана!</b>\n"
 "\n"
 "<b>Название:</b> {name}\n"
 "\n"
 "<b>Ссылка:</b> <code>{link}</code>\n"
 "\n"
-"<i>И?спользуйте эту ссылку для отслеживания статистики по перешедшим по "
+"<i>Используйте эту ссылку для отслеживания статистики по перешедшим по "
 "ней пользователям.</i>"
 
 #: app/bot/routers/admin_tools/invites_handler.py:88
@@ -145,7 +145,7 @@ msgstr "<i>У вас ещё нет инвайт-ссылок. Сперва со�
 #: app/bot/routers/admin_tools/invites_handler.py:253
 #: app/bot/routers/admin_tools/invites_handler.py:280
 msgid "invite_editor:popup:not_found"
-msgstr "❌ И?нвайт-ссылка не найдена"
+msgstr "❌ Инвайт-ссылка не найдена"
 
 #: app/bot/routers/admin_tools/invites_handler.py:150
 #: app/bot/routers/admin_tools/invites_handler.py:223
@@ -247,7 +247,7 @@ msgstr "🗑 Удалить"
 
 #: app/bot/routers/admin_tools/keyboard.py:102
 msgid "promocode_editor:button:edit"
-msgstr "✏️ И?зменить"
+msgstr "✏️ Изменить"
 
 #: app/bot/routers/admin_tools/keyboard.py:118 app/bot/utils/formatting.py:73
 #, python-brace-format
@@ -542,7 +542,7 @@ msgstr "❌ <i>Не удалось удалить промокод.</i>"
 #: app/bot/routers/admin_tools/promocode_handler.py:142
 msgid "promocode_editor:message:edit"
 msgstr ""
-"🎟️ <b>И?зменить промокод:</b>\n"
+"🎟️ <b>Изменить промокод:</b>\n"
 "\n"
 "<i>Отправьте промокод для редактирования</i>"
 
@@ -563,7 +563,7 @@ msgstr "❌ <i>Промокод не найден или уже активиро
 #: app/bot/routers/admin_tools/promocode_handler.py:198
 msgid "promocode_editor:ntf:edited_success"
 msgstr ""
-"✅ <i>И?змененный промокод:</i>\n"
+"✅ <i>Измененный промокод:</i>\n"
 "<pre>{promocode}</pre>\n"
 "<i>Новая длительность: {duration}</i>"
 
@@ -733,7 +733,7 @@ msgstr ""
 "\n"
 "3X-UI SHOP — ваш надёжный помощник в мире свободного интернета. Мы "
 "предлагаем безопасные и быстрые соединения с любыми интернет-сервисами с "
-"использованием протокола XRAY. Наш сервис работает в Китае, И?ране и "
+"использованием протокола XRAY. Наш сервис работает в Китае, Иране и "
 "России.\n"
 "\n"
 "🚀 ВЫСОКАЯ СКОРОСТЬ\n"
@@ -742,7 +742,6 @@ msgstr ""
 "♾️ БЕЗЛИМИТ\n"
 "✅ ГАРАНТИЯ И ПРОБНЫЙ ПЕРИОД\n"
 "👥 РЕФЕРАЛЬНАЯ СИСТЕМА\n"
-"
 
 #: app/bot/routers/main_menu/keyboard.py:25
 msgid "referral:button:get_referred_trial"
@@ -766,7 +765,7 @@ msgstr "👥 Пригласить"
 
 #: app/bot/routers/main_menu/keyboard.py:58
 msgid "main_menu:button:support"
-msgstr "И Помощь"
+msgstr "🆘 Помощь"
 
 #: app/bot/routers/main_menu/keyboard.py:66
 msgid "main_menu:button:admin_tools"
@@ -792,7 +791,7 @@ msgstr "❌ Отменить"
 msgid "profile:message:main"
 msgstr ""
 "👤 <b>Ваш профиль:</b>\n"
-"И?мя: {name}\n"
+"Имя: {name}\n"
 "ID: {id}\n"
 "\n"
 
@@ -965,7 +964,7 @@ msgstr "🎟️ Активировать промокод"
 
 #: app/bot/routers/subscription/keyboard.py:111
 msgid "subscription:button:change_devices"
-msgstr "⬅️ Изменить количество устройств"
+msgstr "◀️ Изменить количество устройств"
 
 #: app/bot/routers/subscription/keyboard.py:122
 msgid "subscription:button:pay"
@@ -973,15 +972,15 @@ msgstr "💳 Оплатить"
 
 #: app/bot/routers/subscription/keyboard.py:128
 msgid "subscription:button:change_payment_method"
-msgstr "⬅️ Изменить способ оплаты"
+msgstr "◀️ Изменить способ оплаты"
 
 #: app/bot/routers/subscription/keyboard.py:158
 msgid "subscription:button:change_duration"
-msgstr "⏳ Изменить длительность"
+msgstr "◀️ Изменить длительность"
 
 #: app/bot/routers/subscription/keyboard.py:171
 msgid "subscription:button:download_app"
-msgstr "🔑 Подключиться"
+msgstr "🔌 Подключиться"
 
 #: app/bot/routers/subscription/payment_handler.py:58
 msgid "payment:message:order_extend"
@@ -1108,7 +1107,7 @@ msgstr "❌ Не удалось активировать пробный пери
 #: app/bot/routers/support/handler.py:21
 msgid "support:message:main"
 msgstr ""
-"И? <b>Помощь:</b>\n"
+"🆘 <b>Помощь:</b>\n"
 "\n"
 "По вопросам сотрудничества, улучшения функционала и другим вопросам, "
 "пожалуйста, свяжитесь с оператором."

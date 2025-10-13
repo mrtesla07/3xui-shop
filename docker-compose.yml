@@ -54,6 +54,16 @@ services:
       - "traefik.http.routers.bot.entrypoints=websecure"
       - "traefik.http.routers.bot.tls.certresolver=letsencrypt"
       - "traefik.http.services.bot.loadbalancer.server.port=8080"
+  urlpay-verify:
+    image: nginx:alpine
+    restart: unless-stopped
+    volumes:
+      - ./public:/usr/share/nginx/html:ro
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.urlpay-verify.rule=Host(`${BOT_DOMAIN}`) && Path(`/urlpay.html`)
+      - traefik.http.routers.urlpay-verify.entrypoints=websecure
+      - traefik.http.routers.urlpay-verify.tls.certresolver=letsencrypt
 
 volumes:
   redis_data:

@@ -198,14 +198,23 @@ class UrlPay(PaymentGateway):
             )
             return None
 
-        if transaction.payment_uuid and str(transaction.payment_uuid) != str(payment_uuid):
-            logger.warning(
-                "UrlPay callback uuid mismatch with database: payload=%s, db=%s, payment_id=%s",
-                payment_uuid,
-                transaction.payment_uuid,
-                payment_id,
-            )
-            return None
+        if transaction.payment_uuid:
+            if str(transaction.payment_uuid) != str(payment_uuid):
+                logger.warning(
+                    "UrlPay callback uuid mismatch with database: payload=%s, db=%s, payment_id=%s",
+                    payment_uuid,
+                    transaction.payment_uuid,
+                    payment_id,
+                )
+                return None
+        else:
+            async with self.session() as session:
+                await Transaction.update(
+                    session=session,
+                    payment_id=payment_id,
+                    payment_uuid=str(payment_uuid),
+                )
+            transaction.payment_uuid = str(payment_uuid)
 
         payment = await self._fetch_payment(payment_id)
         if not payment:
@@ -219,7 +228,6 @@ class UrlPay(PaymentGateway):
                 api_uuid,
                 payment_id,
             )
-            return None
 
         if transaction.payment_uuid and api_uuid and str(transaction.payment_uuid) != str(api_uuid):
             logger.warning(
@@ -228,15 +236,6 @@ class UrlPay(PaymentGateway):
                 api_uuid,
                 payment_id,
             )
-            return None
-
-        if not transaction.payment_uuid and api_uuid:
-            async with self.session() as session:
-                await Transaction.update(
-                    session=session,
-                    payment_id=payment_id,
-                    payment_uuid=str(api_uuid),
-                )
 
         status_map = {
             "success": {3},

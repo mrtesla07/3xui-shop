@@ -40,7 +40,7 @@ class UrlPay(PaymentGateway):
         i18n: I18n,
         services: ServicesContainer,
     ) -> None:
-        self.name = __("payment:gateway:urlpay")
+        self.name = _("payment:gateway:urlpay")
         self.app = app
         self.config = config
         self.session = session

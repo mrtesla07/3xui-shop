@@ -23,6 +23,7 @@ class Transaction(Base):
         id (int): Unique identifier for the transaction (primary key).
         tg_id (int): Telegram user ID associated with the transaction.
         payment_id (str): Unique payment identifier for the transaction.
+        payment_uuid (str | None): UUID associated with the payment (if provided by gateway).
         subscription (str): Name of the subscription plan associated with the transaction.
         status (TransactionStatus): Current status of the transaction (e.g., pending, completed).
         created_at (datetime): Timestamp when the transaction was created.
@@ -35,6 +36,11 @@ class Transaction(Base):
     id: Mapped[int] = mapped_column(primary_key=True, autoincrement=True)
     tg_id: Mapped[int] = mapped_column(ForeignKey("users.tg_id"), nullable=False)
     payment_id: Mapped[str] = mapped_column(String(length=64), unique=True, nullable=False)
+    payment_uuid: Mapped[str | None] = mapped_column(
+        String(length=64),
+        unique=True,
+        nullable=True,
+    )
     subscription: Mapped[str] = mapped_column(String(length=255), nullable=False)
     status: Mapped[TransactionStatus] = mapped_column(
         Enum(TransactionStatus, values_callable=lambda obj: [e.value for e in obj]),
@@ -51,7 +57,7 @@ class Transaction(Base):
     def __repr__(self) -> str:
         return (
             f"<Transaction(id={self.id}, tg_id={self.tg_id}, payment_id='{self.payment_id}', "
-            f"subscription='{self.subscription}', status='{self.status}', "
+            f"payment_uuid='{self.payment_uuid}', subscription='{self.subscription}', status='{self.status}', "
             f"created_at={self.created_at}, updated_at={self.updated_at})>"
         )
 

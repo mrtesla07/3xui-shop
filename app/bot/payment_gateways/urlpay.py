@@ -124,6 +124,7 @@ class UrlPay(PaymentGateway):
                 tg_id=data.user_id,
                 subscription=data.pack(),
                 payment_id=payment_id,
+                payment_uuid=order_uuid,
                 status=TransactionStatus.PENDING,
             )
 
@@ -173,24 +174,69 @@ class UrlPay(PaymentGateway):
         return hashlib.sha1(payload.encode("utf-8")).hexdigest()
 
     async def _verify_callback(self, payload: dict[str, Any], payment_status: str) -> str | None:
-        payment_id = payload.get("id")
-        if payment_id is None:
+        payment_id_raw = payload.get("id")
+        if payment_id_raw is None:
             logger.warning("UrlPay callback payload does not contain payment id.")
             return None
 
+        payment_id = str(payment_id_raw)
         payment_uuid = payload.get("uuid")
+        if not payment_uuid:
+            logger.warning(
+                "UrlPay callback payload does not contain uuid for payment %s.",
+                payment_id,
+            )
+            return None
+
+        async with self.session() as session:
+            transaction = await Transaction.get_by_id(session=session, payment_id=payment_id)
+
+        if not transaction:
+            logger.warning(
+                "UrlPay callback received for unknown payment id %s.",
+                payment_id,
+            )
+            return None
+
+        if transaction.payment_uuid and str(transaction.payment_uuid) != str(payment_uuid):
+            logger.warning(
+                "UrlPay callback uuid mismatch with database: payload=%s, db=%s, payment_id=%s",
+                payment_uuid,
+                transaction.payment_uuid,
+                payment_id,
+            )
+            return None
 
         payment = await self._fetch_payment(payment_id)
         if not payment:
             return None
 
-        if payment_uuid and payment.get("uuid") and str(payment["uuid"]) != str(payment_uuid):
+        api_uuid = payment.get("uuid")
+        if api_uuid and str(api_uuid) != str(payment_uuid):
             logger.warning(
-                "UrlPay callback uuid mismatch: payload=%s, api=%s",
+                "UrlPay callback uuid mismatch with API: payload=%s, api=%s, payment_id=%s",
                 payment_uuid,
-                payment.get("uuid"),
+                api_uuid,
+                payment_id,
             )
             return None
+
+        if transaction.payment_uuid and api_uuid and str(transaction.payment_uuid) != str(api_uuid):
+            logger.warning(
+                "UrlPay callback uuid mismatch between database and API: db=%s, api=%s, payment_id=%s",
+                transaction.payment_uuid,
+                api_uuid,
+                payment_id,
+            )
+            return None
+
+        if not transaction.payment_uuid and api_uuid:
+            async with self.session() as session:
+                await Transaction.update(
+                    session=session,
+                    payment_id=payment_id,
+                    payment_uuid=str(api_uuid),
+                )
 
         status_map = {
             "success": {3},
@@ -205,7 +251,7 @@ class UrlPay(PaymentGateway):
             )
             return None
 
-        return str(payment_id)
+        return payment_id
 
     async def _fetch_payment(self, payment_id: Any) -> dict[str, Any] | None:
         if not self.config.urlpay.API_KEY:

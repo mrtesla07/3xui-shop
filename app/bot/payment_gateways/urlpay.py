@@ -1,4 +1,5 @@
 import hashlib
+import os
 import logging
 import uuid
 from decimal import Decimal, ROUND_HALF_UP
